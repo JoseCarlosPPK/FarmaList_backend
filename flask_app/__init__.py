@@ -1,19 +1,8 @@
-
-from datetime import datetime, timedelta
-import io
-import zipfile
-import xlsxwriter
-from xlsxwriter import Workbook
-from xlsxwriter.format import Format
-from xlsxwriter.worksheet import Worksheet
-from flask import Flask, jsonify, request, send_file
+from flask import Flask
 from flask_marshmallow import Marshmallow
-import marshmallow
 from flask_sqlalchemy import SQLAlchemy
-import threading
 from dotenv import dotenv_values # cargar variables de entorno de .env
-import os # para acceder a las variables de entorno
-from . import correo
+import os 
 
 
 app = Flask(__name__)
@@ -34,7 +23,6 @@ ma = Marshmallow(app)
 # API
 ###############################################################################
 # Circular imports?: https://flask.palletsprojects.com/en/stable/patterns/packages/#simple-packages
-from .API import endpoints
 
 
 
