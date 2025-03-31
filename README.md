@@ -19,6 +19,13 @@ La primera vez ha de instalar todas las dependencias:
 poetry install
 ```
 
+-  Puede consultar las tareas que puede ejecutar con
+
+```
+poetry run task -l
+task -l # si has ejecutado poetry shell previamente
+```
+
 -  Para poner en marcha los contenederes docker:
 
 ```
@@ -31,4 +38,11 @@ task docker # si has ejecutado poetry shell previamente
 ```
 poetry run task flask
 task flask # si has ejecutado poetry shell previamente
+```
+
+-  Para poner los contenedores docker y la aplicación de flask en marcha en modo debug:
+
+```
+poetry run task dev
+task dev # si has ejecutado poetry shell previamente
 ```
