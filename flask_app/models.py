@@ -48,3 +48,8 @@ class Tutoriza(db.Model):
 class Persona(db.Model):
     __table__ = db.metadata.tables["Persona"]
     centros = db.relationship('Centro', secondary='Tutoriza', back_populates="personas")
+
+
+
+class Usuario(db.Model):
+    __table__ = db.metadata.tables["Usuario"]
