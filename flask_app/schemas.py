@@ -1,5 +1,5 @@
 from . import ma
-from .models import Centro, Farmacia, FarmaciaHospitalaria, Convocatoria, Tutoriza, Persona
+from .models import Centro, Farmacia, FarmaciaHospitalaria, Convocatoria, Tutoriza, Persona, Usuario
 from marshmallow import fields
 
 # Schemas marshmellow SqlAlchemy
@@ -51,5 +51,9 @@ class TutorizaSchema(ma.SQLAlchemyAutoSchema):
         additional = ["id_persona", "id_centro"]
 
     
-
+class UsuarioSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Usuario
+        load_instance = True
+        ordered = False
 
