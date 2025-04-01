@@ -9,6 +9,11 @@ El objetivo es desarrollar una API Restful para que posibles frontends, como el 
 
 Para ello ha sido necesario previamente el análisis, diseño e implementación de la base de datos. Se proporciona una imagen docker con la base de datos diseñada para usar en desarrollo.
 
+## Estado
+
+Desarrollando los modelos, _schemas_ para la serialización/deserialización de los modelos, primeros
+endpoints de la API y la autorización para obtener un JWT.
+
 ## Cómo iniciar el proyecto
 
 Se está utilizando el _task runner_ `taskipy`, que trabaja en conjunto con el gestor de dependencias `poetry`.
