@@ -64,7 +64,7 @@ CREATE TABLE Tutoriza (
 CREATE TABLE Usuario (
   id int NOT NULL AUTO_INCREMENT,
   nombre varchar(20) NOT NULL,
-  password varchar(64) NOT NULL,
+  password varchar(97) NOT NULL,
   correo varchar(50),
   permisos int DEFAULT 0 NOT NULL,
   PRIMARY KEY (id),
