@@ -53,12 +53,16 @@ class Persona(db.Model):
 
 class Usuario(db.Model):
     __table__ = db.metadata.tables["Usuario"]
+    __password_manager = PasswordHasher(encoding="utf-8")
 
     def __init__(self, **kwargs):
         if 'password' in kwargs:
-            self.password = PasswordHasher(encoding="utf-8").hash(kwargs['password'])
+            self.password = Usuario.__password_manager.hash(kwargs['password'])
             del kwargs['password']
 
         for key, value in kwargs.items():
             setattr(self, key, value)
 
+
+    def check_password(self, password):
+        return Usuario.__password_manager.verify(self.password, password)
