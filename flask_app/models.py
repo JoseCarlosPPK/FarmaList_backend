@@ -1,6 +1,6 @@
 from . import app, db
 from sqlalchemy import desc
-
+from argon2 import PasswordHasher
 
 #Sirve para cargar el schema de la BD si ya tenía tablas creadas
 with app.app_context():
@@ -53,3 +53,16 @@ class Persona(db.Model):
 
 class Usuario(db.Model):
     __table__ = db.metadata.tables["Usuario"]
+    __password_manager = PasswordHasher(encoding="utf-8")
+
+    def __init__(self, **kwargs):
+        if 'password' in kwargs:
+            self.password = Usuario.__password_manager.hash(kwargs['password'])
+            del kwargs['password']
+
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+
+
+    def check_password(self, password):
+        return Usuario.__password_manager.verify(self.password, password)
