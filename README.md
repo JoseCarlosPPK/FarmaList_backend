@@ -11,8 +11,8 @@ Para ello ha sido necesario previamente el análisis, diseño e implementación 
 
 ## Estado
 
-Desarrollando los modelos, _schemas_ para la serialización/deserialización de los modelos, primeros
-endpoints de la API y resolver el CORS.
+Desarrollando los modelos, _schemas_ para la serialización/deserialización de los modelos
+y la API Restful.
 
 ## Cómo iniciar el proyecto
 
