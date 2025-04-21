@@ -58,3 +58,20 @@ def api_get_farmacias():
     return response
     
     
+
+@app.delete(f"{BASE_API}/farmacias/<int:id>")
+@jwt_required()
+def api_delete_farmacia(id):
+
+    a_borrar = Farmacia.query.get(id)
+ 
+    if (not a_borrar):
+        return jsonify({"error": f"No hay ninguna farmacia con id {id}"}), 404
+
+    try:
+        db.session.delete(a_borrar)
+        db.session.commit()
+    except Exception as e:
+        return jsonify({"error": f"Fallo del servidor al realizar el borrado de la farmacia con id {id}"}), 500
+
+    return jsonify({"msg": f"Farmacia con id {id} borrada"}), 200 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/DELETE
