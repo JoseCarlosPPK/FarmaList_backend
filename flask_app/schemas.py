@@ -20,20 +20,21 @@ class CentroSchema(ma.SQLAlchemyAutoSchema):
         load_instance = True
         ordered = False
 
+# Hereda de CentroSchema para que tenga la relación con Persona
 class FarmaciaSchema(CentroSchema):
     class Meta:
         model = Farmacia
         load_instance = True
         ordered = False
-        additional = ["id"]
+        include_fk = True
 
-
+# Hereda de CentroSchema para que tenga la relación con Persona
 class FarmaciaHospitalariaSchema(CentroSchema):
     class Meta:
         model = FarmaciaHospitalaria
         load_instance = True
         ordered = False
-        additional = ["id"]
+        include_fk = True
 
 
 class ConvocatoriaSchema(ma.SQLAlchemyAutoSchema):
@@ -48,7 +49,7 @@ class TutorizaSchema(ma.SQLAlchemyAutoSchema):
         model = Tutoriza
         load_instance = True
         ordered = False
-        additional = ["id_persona", "id_centro"]
+        include_fk = True
 
     
 class UsuarioSchema(ma.SQLAlchemyAutoSchema):
