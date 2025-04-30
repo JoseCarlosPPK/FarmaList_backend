@@ -1,10 +1,12 @@
+import sqlalchemy.exc
 from .. import app, db
 from ..models import Farmacia, Persona
-from ..schemas import FarmaciaSchema
+from ..schemas import FarmaciaSchema, PersonaSchema
 from . import BASE_API
 from flask import jsonify, request
 from flask_jwt_extended import jwt_required
-
+import marshmallow
+import sqlalchemy
 
 filter_to_column = {
     "nombre": Farmacia.nombre,
@@ -57,7 +59,35 @@ def api_get_farmacias():
    
     return response
     
-    
+
+
+
+@app.post(f"{BASE_API}/farmacias")
+@jwt_required()
+def add_farmacia():
+    farmacia_schema = FarmaciaSchema()
+
+    # Con load se validan los datos
+    try:
+        farmacia = farmacia_schema.load(request.json)
+    except marshmallow.ValidationError as e:
+        # En e.messages se muestran los errores por cada atributo. Por ejemplo:
+        #{ 'nombre': falta y es obligatorio }
+        return jsonify(e.messages), 400
+
+
+    # Intentamos añadir y guardar la farmacia en la BD.
+    # Puede haber errores como incumplir restricciones de la BD
+    try:            
+        db.session.add(farmacia)
+        db.session.commit()
+    except sqlalchemy.exc.IntegrityError as e:
+        return jsonify({'error': e._message()}), 409 # https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8
+
+
+    return jsonify({'msg': 'Farmacia creada', 'farmacia': farmacia_schema.dump(farmacia)}), 201
+
+
 
 @app.delete(f"{BASE_API}/farmacias/<int:id>")
 @jwt_required()
