@@ -64,7 +64,7 @@ def api_get_farmacias():
 
 @app.post(f"{BASE_API}/farmacias")
 @jwt_required()
-def add_farmacia():
+def api_add_farmacia():
     farmacia_schema = FarmaciaSchema()
 
     # Con load se validan los datos
@@ -87,6 +87,37 @@ def add_farmacia():
 
     return jsonify({'msg': 'Farmacia creada', 'farmacia': farmacia_schema.dump(farmacia)}), 201
 
+
+
+@app.put(f"{BASE_API}/farmacias/<int:id>")
+@jwt_required()
+def api_edit_farmacia(id):
+    farmacia_schema = FarmaciaSchema(partial=True)
+    farmacia = Farmacia.query.get(id)
+
+    if (not farmacia):
+        return jsonify({'error': f"Farmacia con id {id} no encontrada"}), 404
+
+    # Con load se validan los datos
+    try:
+        farmacia = farmacia_schema.load(request.json, instance=farmacia)
+    except marshmallow.ValidationError as e:
+        # En e.messages se muestran los errores por cada atributo. Por ejemplo:
+        #{ 'nombre': falta y es obligatorio }
+        return jsonify(e.messages), 400
+
+
+    # Intentamos editar guardando la farmacia en la BD.
+    # https://flask-sqlalchemy.readthedocs.io/en/stable/queries/#insert-update-delete
+    # Puede haber errores como incumplir restricciones de la BD
+    try:            
+       
+        db.session.commit()
+    except sqlalchemy.exc.IntegrityError as e:
+        return jsonify({'error': e._message()}), 409 # https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8
+
+
+    return jsonify({'msg': 'Farmacia editada', 'farmacia': farmacia_schema.dump(farmacia)}), 201
 
 
 @app.delete(f"{BASE_API}/farmacias/<int:id>")
