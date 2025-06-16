@@ -92,6 +92,26 @@ CREATE TABLE Listado (
 );
 
 
+/* Table structure for Listado_farmacias */
+CREATE TABLE Listado_farmacias (
+  id_convocatoria int NOT NULL,
+  nombre varchar(60) NOT NULL,
+  cp varchar(6) NOT NULL,
+  PRIMARY KEY (id_convocatoria, nombre, cp),
+  CONSTRAINT fk_listado_farmacias FOREIGN KEY (id_convocatoria, nombre, cp) REFERENCES Listado(id_convocatoria, nombre, cp) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+/* Table structure for Listado_farmacias_hospitalarias */
+CREATE TABLE Listado_farmacias_hospitalarias (
+  id_convocatoria int NOT NULL,
+  nombre varchar(60) NOT NULL,
+  cp varchar(6) NOT NULL,
+  PRIMARY KEY (id_convocatoria, nombre, cp),
+  CONSTRAINT fk_listado_farmacias_hospitalarias FOREIGN KEY (id_convocatoria, nombre, cp) REFERENCES Listado(id_convocatoria, nombre, cp) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
 /* Table structure for Tutoriza_listado */
 CREATE TABLE Tutoriza_listado (
   id_persona int NOT NULL,
@@ -102,4 +122,3 @@ CREATE TABLE Tutoriza_listado (
   CONSTRAINT fk_id_persona_listado FOREIGN KEY (id_persona) REFERENCES Persona(id) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT fk_listado FOREIGN KEY (id_convocatoria, nombre, cp) REFERENCES Listado(id_convocatoria, nombre, cp) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
