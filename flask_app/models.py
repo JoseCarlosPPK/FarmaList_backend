@@ -66,3 +66,19 @@ class Usuario(db.Model):
 
     def check_password(self, password):
         return Usuario.__password_manager.verify(self.password, password)
+    
+
+class Listado(db.Model):
+    __table__ = db.metadata.tables["Listado"]
+    personas = db.relationship('Persona', secondary='Tutoriza_listado')
+
+
+class ListadoFarmacias(Listado):
+    __table__ = db.metadata.tables["Listado_farmacias"]
+    
+
+
+class ListadoFarmaciasHospitalarias(Listado):
+    __table__ = db.metadata.tables["Listado_farmacias_hospitalarias"]
+    
+
