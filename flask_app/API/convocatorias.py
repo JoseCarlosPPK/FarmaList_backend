@@ -8,6 +8,10 @@ from flask import request
 import sqlalchemy
 import marshmallow
 
+# SqlAlchemy OperationalError and IntegrityError bug
+# https://github.com/PyMySQL/mysqlclient/issues/535
+
+
 @app.get(f"{BASE_API}/convocatorias")
 @jwt_required()
 def api_get_convocatorias():
@@ -60,7 +64,7 @@ def api_add_convocatoria():
    try:
       db.session.add(convocatoria)
       db.session.flush()
-   except sqlalchemy.exc.IntegrityError as e:
+   except sqlalchemy.exc.SQLAlchemyError as e:
       return {'error': e._message()}, 409 # https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8
 
 
@@ -91,7 +95,7 @@ def api_add_convocatoria():
    # Puede haber errores como incumplir restriciones de la BD
    try:
       db.session.commit()
-   except sqlalchemy.exc.IntegrityError as e:
+   except sqlalchemy.exc.SQLAlchemyError as e:
       db.session.rollback()
       return {'error': e._message()}, 409 # https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8
 
