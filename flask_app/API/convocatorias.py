@@ -98,3 +98,81 @@ def api_add_convocatoria():
    return { 
       "convocatoria": ConvocatoriaSchema().dump(convocatoria)
    }, 201
+
+
+
+# @app.get(f"{BASE_API}/convocatorias/<int:id>")
+# @jwt_required()
+# def api_get_convocatoria(id):
+#    convocatoria = Convocatoria.query.get(id)
+
+#    listado = Listado.query.filter_by(id_convocatoria = id).all()
+   
+#    return { "data": ListadoSchema(many=True).dump(listado) }
+
+
+
+@app.put(f"{BASE_API}/convocatorias/<int:id>")
+@jwt_required()
+def api_update_convocatoria(id):
+   convocatoria = Convocatoria.query.get(id)
+
+   if (not convocatoria):
+      return {"error": f"No hay ninguna convocatoria con id {id}"}, 404
+
+   data_json = request.json
+
+   try:
+      convocatoria = ConvocatoriaSchema().load(data_json["convocatoria"], instance=convocatoria)
+   except marshmallow.exceptions.ValidationError as e:
+      # En e.messages se muestran los errores por cada atributo. Por ejemplo:
+      # { 'nombre': falta y es obligatorio }
+      return e.messages, 400
+
+
+   # Intentamos actualizar la convocatoria
+   # Puede haber errores como incumplir restriciones de la BD
+   try:
+      db.session.flush()
+   except sqlalchemy.exc.SQLAlchemyError as e:
+      return {'error': e._message()}, 409
+   
+
+   Listado.query.filter_by(id_convocatoria=id).delete()
+   
+
+   for tipo_listado_schema in TIPOS_LISTADO_SCHEMAS:
+      listado_json = data_json.get(tipo_listado_schema.key_json, []) # Estado inicial [] para que no haya problemas
+      listado_centros = []
+
+      for obj in listado_json:
+         centro = tipo_listado_schema.model_center.query.get(obj["id"])
+
+         if (not centro):
+            db.session.rollback()
+            return {'error': f"Centro con id {obj['id']} no encontrado"}, 404
+
+         # Preparamos al centro para el formato de listado
+         centro.id_centro = obj["id"]
+         centro.num_plazas = obj["num_plazas"]
+         centro.id_convocatoria = convocatoria.id
+
+         listado_centros.append(centro)
+
+      listado_centros = tipo_listado_schema(many=True).load(tipo_listado_schema(many=True).dump(listado_centros))
+
+      db.session.add_all(listado_centros)   
+
+
+   # Intentamos guardar los cambios
+   # Puede haber errores como incumplir restriciones de la BD
+   try:
+      db.session.commit()
+   except sqlalchemy.exc.SQLAlchemyError as e:
+      db.session.rollback()
+      return {'error': e._message()}, 409 # https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8
+
+
+   return {
+      "convocatoria": ConvocatoriaSchema().dump(convocatoria)
+   }, 200
