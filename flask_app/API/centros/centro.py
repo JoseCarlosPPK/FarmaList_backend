@@ -128,6 +128,6 @@ class Centro(Resource):
             db.session.delete(a_borrar)
             db.session.commit()
         except Exception as e:
-            return {"error": f"Fallo del servidor al realizar el borrado de la farmacia con id {id}"}, 500
+            return {"error": f"Fallo del servidor al realizar el borrado del centro con id {id}"}, 500
 
         return {"msg": f"Centro con id {id} borrado"}, 200 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/DELETE

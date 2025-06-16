@@ -11,8 +11,10 @@ Para ello ha sido necesario previamente el análisis, diseño e implementación 
 
 ## Estado
 
-Desarrollando los modelos, _schemas_ para la serialización/deserialización de los modelos
-y la API Restful.
+-  [x] Modelos
+-  [x] Schemas
+
+Desarrollando la API Restful.
 
 ## Cómo iniciar el proyecto
 
