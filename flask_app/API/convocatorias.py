@@ -22,6 +22,17 @@ def api_get_convocatorias():
 
 
 
+@app.get(f"{BASE_API}/convocatorias/<int:id>")
+@jwt_required()
+def api_get_convocatoria(id):
+   convocatoria = Convocatoria.query.get(id)
+
+   if (not convocatoria):
+      return {"error": f"No hay ninguna convocatoria con id {id}"}, 404
+   
+   return { "data": ConvocatoriaSchema().dump(convocatoria) }
+
+
 @app.delete(f"{BASE_API}/convocatorias/<int:id>")
 @jwt_required()
 def api_delete_convocatoria(id):
@@ -102,17 +113,6 @@ def api_add_convocatoria():
    return { 
       "convocatoria": ConvocatoriaSchema().dump(convocatoria)
    }, 201
-
-
-
-# @app.get(f"{BASE_API}/convocatorias/<int:id>")
-# @jwt_required()
-# def api_get_convocatoria(id):
-#    convocatoria = Convocatoria.query.get(id)
-
-#    listado = Listado.query.filter_by(id_convocatoria = id).all()
-   
-#    return { "data": ListadoSchema(many=True).dump(listado) }
 
 
 
