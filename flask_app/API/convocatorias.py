@@ -1,7 +1,7 @@
 import marshmallow.exceptions
 from .. import app, db
-from ..models import Convocatoria, Listado, Farmacia
-from ..schemas import ConvocatoriaSchema, ListadoSchema, TIPOS_LISTADO_SCHEMAS
+from ..models import Convocatoria, Listado
+from ..schemas import ConvocatoriaSchema, TIPOS_LISTADO_SCHEMAS
 from . import BASE_API
 from flask_jwt_extended import jwt_required
 from flask import request
