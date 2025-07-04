@@ -157,11 +157,12 @@ def get_tabla_format(workbook, color):
 def get_encabezados_farmacia():
    return [
       'Nº',
-      'Nombre y apellidos del titular',
+      'Nombre de la farmacia',
       'Dirección del centro colaborador',
       'Localidad',
       'Provincia',
       'Código Postal',
+      'Tutores',
       'E-mail',
       'Teléfono',
       'Nº plazas'
@@ -175,7 +176,7 @@ def get_encabezados_hospitales():
       'Localidad',
       'Provincia',
       'Código Postal',
-      'Responsable',
+      'Tutores',
       'E-mail',
       'Teléfono',
       'Nº plazas'
@@ -283,6 +284,7 @@ def rellena_workbook(workbook, tipo, convocatoria, datos):
 
 def contenido_excel_farmacias(worksheet, centros, format):
    i = 1
+   ROW_HEIGH = 30 # 
 
    for centro in centros:
       if centro['telefono'] != "" and centro['movil'] != "":
@@ -292,13 +294,25 @@ def contenido_excel_farmacias(worksheet, centros, format):
       else:
          contacto = centro['movil']
 
+      tutores = ''
+      for persona in centro['personas']:
+         tutores += persona['nombre'] + '\n'
+
+      tutores = tutores.rstrip()
+
+      factor_mult = 1
+      # num_tutores = len(centro['personas'])
+      # if num_tutores > 1:
+      #    factor_mult = 0.2 * num_tutores + 1
+
       fila_datos = [
          i,
-         'YO',
+         centro['nombre'],
          centro['direccion'],
          centro['localidad'],
          centro['provincia'],
          centro['cp'],
+         tutores,
          centro['correo'],
          contacto,
          centro['num_plazas']
@@ -311,12 +325,13 @@ def contenido_excel_farmacias(worksheet, centros, format):
          format_escogido = format['impar']
 
       worksheet.write_row(f'A{7+i}', fila_datos, format_escogido)
-      worksheet.set_row(6+i, 30) # Establecer el alto de la fila
+      worksheet.set_row(6+i, ROW_HEIGH * factor_mult) # Establecer el alto de la fila
       i += 1
 
 
 def contenido_excel_hospitales(worksheet, centros, format):
    i = 1
+   ROW_HEIGH = 30
 
    for centro in centros:
       if centro['telefono'] != "" and centro['movil'] != "":
@@ -326,6 +341,17 @@ def contenido_excel_hospitales(worksheet, centros, format):
       else:
          contacto = centro['movil']
 
+      tutores = ''
+      for persona in centro['personas']:
+         tutores += persona['nombre'] + '\n'
+
+      tutores = tutores.rstrip()
+
+      factor_mult = 1
+      # num_tutores = len(centro['personas'])
+      # if num_tutores > 1:
+      #    factor_mult = 0.2 * num_tutores + 1
+
       fila_datos = [
          i,
          centro['nombre'],
@@ -333,7 +359,7 @@ def contenido_excel_hospitales(worksheet, centros, format):
          centro['localidad'],
          centro['provincia'],
          centro['cp'],
-         'YO',
+         tutores,
          centro['correo'],
          contacto,
          centro['num_plazas']
@@ -345,6 +371,6 @@ def contenido_excel_hospitales(worksheet, centros, format):
          format_escogido = format['impar']
 
       worksheet.write_row(f'A{7+i}', fila_datos, format_escogido)
-      worksheet.set_row(6+i, 30) # Establecer el alto de la fila
+      worksheet.set_row(6+i, ROW_HEIGH * factor_mult) # Establecer el alto de la fila
       i += 1
 
