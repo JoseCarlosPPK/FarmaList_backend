@@ -4,6 +4,7 @@ from xlsxwriter.worksheet import Worksheet
 from datetime import datetime, timedelta
 import os
 
+PATH_DIR = os.path.dirname(__file__)
 
 # Diccionario para traducir un mes numérico a texto
 meses =  {
@@ -40,9 +41,9 @@ def cabecera_excel(worksheet:Worksheet, titulo_listado:str, titulo_encabezado:di
       curso_academico (str): formato yyyy-yyyy
       actualizado_format (Format): 
    """
-   # path_logos = os.path.join(PATH_DIR, "static/images")
-   # logo_ugr = f"{path_logos}/logo_ugr.png"
-   # logo_farmacia = f"{path_logos}/logo_farmacia.png"
+   path_logos = os.path.join(PATH_DIR, "img")
+   logo_ugr = f"{path_logos}/logo_ugr.png"
+   logo_farmacia = f"{path_logos}/logo_farmacia.png"
    fecha_actual = datetime.now().strftime("%d/%m/%Y") # fecha para poner el actualizado
 
    image_format = {
@@ -50,8 +51,8 @@ def cabecera_excel(worksheet:Worksheet, titulo_listado:str, titulo_encabezado:di
       'y_scale': 1
    }
 
-   # worksheet.insert_image('A1', logo_ugr, image_format)
-   # worksheet.insert_image('F1', logo_farmacia, image_format)
+   worksheet.insert_image('A1', logo_ugr, image_format)
+   worksheet.insert_image('F1', logo_farmacia, image_format)
    worksheet.merge_range('E5:F5', f"Actualizado {fecha_actual}", actualizado_format)
    worksheet.merge_range('A6:I6', titulo_encabezado['msg'], titulo_encabezado['format'])
    # Establecer el alto de la fila. El índice empiza en 0. El valor de 30 (altura)
