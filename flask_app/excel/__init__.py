@@ -147,6 +147,7 @@ def get_tabla_format_impar(workbook):
 
 def get_tabla_format(workbook, color):
    return workbook.add_format({
+      'align': 'center',
       'valign': 'vcenter',
       'bg_color': color,
       'font_size': 13,
