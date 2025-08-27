@@ -11,10 +11,7 @@ Para ello ha sido necesario previamente el análisis, diseño e implementación 
 
 ## Estado
 
--  [x] Modelos
--  [x] Schemas
-
-Desarrollando la API Restful.
+Completado (versión 1.0.0)
 
 ## Cómo iniciar el proyecto
 
