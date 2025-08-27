@@ -4,3 +4,4 @@ from . import centros
 from . import convocatorias
 from . import listados
 from . import excel
+from . import correo
