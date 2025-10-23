@@ -1,52 +1,21 @@
-# Flask Backend TFG
+# 💊 FarmaList Backend - TFG 🎓
 
-Backend para la plataforma web del Grado de Farmacia de la Facultad de Farmacia (UGR).
+Backend para la plataforma web para el Grado de Farmacia de la Facultad de Farmacia (UGR).
 
-## Objetivo
+Backend para la gestión de **centros colaboradores** y **listados de prácticas externas** para el Grado de Farmacia de la Facultad de Farmacia de la **UGR**. Implementa la lógica de negocio a través de una API RESTful.
 
-El objetivo es desarrollar una API Restful para que posibles frontends, como el de
+## 🎯 Objetivo
+
+Lógica necesaria para gestionar los listados de centros colaboradores para las prácticas externas
+de los alumnos del grado.
+
+El objetivo es desarrollar una **API Restful** para que posibles frontends, como el de
 [frontend_tfg](https://github.com/JoseCarlosPPK/frontend_tfg) funcionen.
-
-Para ello ha sido necesario previamente el análisis, diseño e implementación de la base de datos. Se proporciona una imagen docker con la base de datos diseñada para usar en desarrollo.
 
 ## Estado
 
-Completado (versión 1.0.0)
+Hay dos desarrollos llevándose a cabo:
 
-## Cómo iniciar el proyecto
+1. [centros-datos-duplicados](https://github.com/JoseCarlosPPK/FarmaList_backend/tree/centros-datos-duplicados/main): A la hora de crear los listados, los datos de los centros se duplican (si te interesa mantener el estado de los listados tal cual los creastes aunque modifiques o borres los centros a posteriori). Version 1.0.0
 
-Se está utilizando el _task runner_ `taskipy`, que trabaja en conjunto con el gestor de dependencias `poetry`.
-
-La primera vez ha de instalar todas las dependencias:
-
-```
-poetry install
-```
-
--  Puede consultar las tareas que puede ejecutar con
-
-```
-poetry run task -l
-task -l # si has ejecutado poetry shell previamente
-```
-
--  Para poner en marcha los contenederes docker:
-
-```
-poetry run task docker
-task docker # si has ejecutado poetry shell previamente
-```
-
--  Para poner en marcha el servidor de desarrollo de flask en modo debug:
-
-```
-poetry run task flask
-task flask # si has ejecutado poetry shell previamente
-```
-
--  Para poner los contenedores docker y la aplicación de flask en marcha en modo debug:
-
-```
-poetry run task dev
-task dev # si has ejecutado poetry shell previamente
-```
+2. [centros-por-referencia](https://github.com/JoseCarlosPPK/FarmaList_backend/tree/centros-por-referencia/main) A la hora de crear los listados, se utilizan referencias de los centros. No hay duplicación de datos pero si un centro se elimina, tampoco aparecerá en un listado que ya creaste en el pasado. _Actualmente en desarrollo_
