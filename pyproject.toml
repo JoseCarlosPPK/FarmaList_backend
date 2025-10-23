@@ -8,7 +8,7 @@ readme = "README.md"
 
 [tool.taskipy.tasks]
 phpmyadmin = "sudo docker compose up phpmyadmin"
-database = "sudo docker compose up db"
+db = "sudo docker compose up db"
 flask = "flask --app flask_app run --debug"
 docker = "sudo docker compose --profile debug up"
 pre_dev = "task docker -d"
