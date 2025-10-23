@@ -68,8 +68,7 @@ def envia_correos_con_informe(destinatarios, asunto, mensaje):
     new_body = f"""
 INFORME ENVÍO DE CORREOS
 ------------------------
-Ha envíado un correo a través de la aplicación de gestión de
-centros de la Facultad de Farmacia el {today.day}/{today.month}/{today.year} a las {today.hour}:{today.minute}.
+Ha envíado un correo a través de la plataforma FarmaList el {today.day}/{today.month}/{today.year} a las {today.hour}:{today.minute}.
 
 * Mensajes enviados con éxito: {len(respuesta['con_exito'])}
 * Mensajes fallidos: {len(respuesta['fallidos'])}
