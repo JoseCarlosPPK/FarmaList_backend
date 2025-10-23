@@ -16,9 +16,12 @@ import marshmallow
 @jwt_required()
 def api_get_convocatorias():
    # https://docs.sqlalchemy.org/en/20/tutorial/data_select.html#order-by
-   convocatorias = Convocatoria.query.order_by(Convocatoria.fecha_ini.desc()).all()
+   paginate_obj = Convocatoria.query.order_by(Convocatoria.fecha_ini.desc()).paginate(count=True, per_page=20)
 
-   return { "data": ConvocatoriaSchema(many=True).dump(convocatorias) }
+   return { 
+      "data": ConvocatoriaSchema(many=True).dump(paginate_obj.items),
+      "total": paginate_obj.total
+      }
 
 
 
