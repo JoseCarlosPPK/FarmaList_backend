@@ -1,13 +1,8 @@
-# Flask Backend TFG
+# 💊 FarmaList Backend - TFG 🎓
 
-Backend para la plataforma web del Grado de Farmacia de la Facultad de Farmacia (UGR).
+Backend para la plataforma web para el Grado de Farmacia de la Facultad de Farmacia (UGR).
 
-## Objetivo
-
-El objetivo es desarrollar una API Restful para que posibles frontends, como el de
-[frontend_tfg](https://github.com/JoseCarlosPPK/frontend_tfg) funcionen.
-
-Para ello ha sido necesario previamente el análisis, diseño e implementación de la base de datos. Se proporciona una imagen docker con la base de datos diseñada para usar en desarrollo.
+Backend para la gestión de **centros colaboradores** y **listados de prácticas externas** para el Grado de Farmacia de la Facultad de Farmacia de la **UGR**. Implementa la lógica de negocio a través de una API RESTful.
 
 ## Estado
 
